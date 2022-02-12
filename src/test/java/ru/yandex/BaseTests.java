@@ -2,13 +2,8 @@ package ru.yandex;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-
-import java.util.concurrent.TimeUnit;
 
 public class BaseTests {
 
@@ -16,8 +11,8 @@ public class BaseTests {
 
     @BeforeEach
     public void before() {
-        System.setProperty("webdriver.chrome.driver", System.getenv("CHROME_DRIVER"));
-        geckoDriver = new ChromeDriver();
+        System.setProperty("webdriver.gecko.driver", System.getenv("GECKO_DRIVER"));
+        geckoDriver = new FirefoxDriver();
 
         geckoDriver.manage().window().maximize();
 
@@ -25,6 +20,6 @@ public class BaseTests {
 
     @AfterEach
     public void after() {
-        //geckoDriver.quit();
+        geckoDriver.quit();
     }
 }

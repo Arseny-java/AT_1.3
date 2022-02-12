@@ -9,12 +9,20 @@ import java.util.List;
 
 
 public class Utilities {
-
-    public static void switchBetweenPage(WebDriver geckoDriver) {
+    /**
+     *Метод реализует переключение между вкладками
+     * @param geckoDriver
+     */
+    public static void switchBetweenPage(WebDriver geckoDriver, int numberOfPage) {
         List<String> listOfPages = new ArrayList<>(geckoDriver.getWindowHandles());
-        geckoDriver.switchTo().window(listOfPages.get(1));
+        geckoDriver.switchTo().window(listOfPages.get(numberOfPage));
     }
 
+    /**
+     * Метод, который ждет полной загрузки страницы
+     * @param geckoDriver
+     * @param waitTime
+     */
     public static void waitFullPage(WebDriver geckoDriver, int waitTime) {
         WebDriverWait wait = new WebDriverWait(geckoDriver, waitTime);
         wait.until((driver -> ((JavascriptExecutor) geckoDriver)

@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -67,6 +68,7 @@ public class YandexMarketPage {
         return this;
     }
 
+    @Step("Перейти в раздел 'Компьютеры'")
     public YandexMarketPage selectComputers() {
         WebDriverWait wait = new WebDriverWait(geckoDriver, 20);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[(text()='Компьютеры')]")));
@@ -74,6 +76,7 @@ public class YandexMarketPage {
         return this;
     }
 
+    @Step("Перейти в раздел 'Ноутбуки'")
     public YandexMarketPage selectNotebooks() {
         WebDriverWait wait = new WebDriverWait(geckoDriver, 20);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[(text()='Ноутбуки')]")));
@@ -81,17 +84,23 @@ public class YandexMarketPage {
         return this;
     }
 
+    @Step("Задать ценовой диапазон")
     public YandexMarketPage sendPricesBounds(String from, String to) {
+        WebDriverWait wait = new WebDriverWait(geckoDriver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(PRICE_BEGIN)));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(PRICE_END)));
         priceBegin.sendKeys(from);
         priceEnd.sendKeys(to);
         return this;
     }
 
+    @Step("Выбор производителя {brand}")
     public YandexMarketPage setManufacturer(String brand) {
         geckoDriver.findElement(By.xpath("//span[text()='" + brand + "']")).click();
         return this;
     }
 
+    @Step("Задать количество элементов на странице")
     public YandexMarketPage setVisibility(String option) {
         dropdownMenu.click();
         String xpath = "//button[(text()='" + option + "')]";
@@ -100,6 +109,7 @@ public class YandexMarketPage {
         return this;
     }
 
+    @Step("Ожидание обновления результатов поиска")
     public YandexMarketPage waitLoaderInvisibility() {
         String LOADER = "//div[@class='_2Lvbi _1oZmP']";
         WebDriverWait wait = new WebDriverWait(geckoDriver, 20);
@@ -107,34 +117,38 @@ public class YandexMarketPage {
         return this;
     }
 
+    @Step("Скроллинг до нужного элемента")
     public YandexMarketPage scrollingToDropdownMenu() {
         JavascriptExecutor je = (JavascriptExecutor) geckoDriver;
         je.executeScript("arguments[0].scrollIntoView(true);", dropdownMenu);
         return this;
     }
 
-    public YandexMarketPage checkSizeOfSearch(int size) {
-        Assertions.assertEquals(listOfSearchResult.size(), size, "Размер не совпадает");
+    @Step("Проверить, что на странице отобразилось {size} элементов")
+    public YandexMarketPage checkSizeOfSearch(String size) {
+        Assertions.assertEquals(listOfSearchResult.size(), Integer.parseInt(size), "Размер не совпадает");
         return this;
     }
 
+    @Step("Запоминаем первый элемент поиска")
     public YandexMarketPage getFirstElement() {
         firstElement = titleCollection.get(0).getAttribute("title");
         return this;
     }
 
+    @Step("Поиск запомненного значения через строку поиска")
     public YandexMarketPage searchFirstElement() {
         searchField.sendKeys(firstElement);
         searchButton.click();
         return this;
     }
 
-    public YandexMarketPage checkResult() {
+    @Step("Сравнение запомненного значения с первым значением результата поиска")
+    public void checkResult() {
         Assertions.assertEquals(firstElement, titleCollection.get(0).getAttribute("title"),
                 "Результаты сравнения сохраненного значения" +
                         " и первого значения " +
                         "в списке результатов не совпадают");
-        return this;
     }
 
 }
