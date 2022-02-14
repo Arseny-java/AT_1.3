@@ -11,7 +11,6 @@ import java.util.List;
 public class Utilities {
     /**
      *Метод реализует переключение между вкладками
-     * @param geckoDriver
      */
     public static void switchBetweenPage(WebDriver geckoDriver, int numberOfPage) {
         List<String> listOfPages = new ArrayList<>(geckoDriver.getWindowHandles());
@@ -20,8 +19,6 @@ public class Utilities {
 
     /**
      * Метод, который ждет полной загрузки страницы
-     * @param geckoDriver
-     * @param waitTime
      */
     public static void waitFullPage(WebDriver geckoDriver, int waitTime) {
         WebDriverWait wait = new WebDriverWait(geckoDriver, waitTime);

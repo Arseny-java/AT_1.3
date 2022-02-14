@@ -19,7 +19,7 @@ import utilities.Utilities;
 
 public class Tests extends BaseTests {
 
-    @Feature("Проверка Яндекс.Маркет")
+    @Feature("Проверка Яндекс.Марке")
     @DisplayName("Проверка результатов поиска")
     @ParameterizedTest(name = "{displayName} {arguments}")
     @CsvSource({"10000, 90000, HP, Lenovo, Показывать по 12, 12"})
